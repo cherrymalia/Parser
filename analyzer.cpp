@@ -36,16 +36,6 @@ bool isKeyword(const string &str)
     return false;
 }
 
-bool isStatement(const string &str)
-{
-    const vector<string> statements{"for", "while"};
-    for (const auto &statement : statements)
-        if (statement == str)
-            return true;
-
-    return false;
-}
-
 bool isOperator(const string &str)
 {
     const vector<string> operators{"<", ">", "<=", ">=", "*", "+", "-", "/", "=", "-=", "*=", "+=", "/=", "++", "--", "=="};
@@ -57,6 +47,7 @@ bool isOperator(const string &str)
     return false;
 }
 
+//update with names for each token type
 bool isSeparator(const string &str)
 {
     const vector<string> Separators{"{", "}", ",", "(", ")", ";"};
@@ -83,8 +74,6 @@ void printRoleOfToken(const string &token)
         cout << "separator           " << token << "\n";
     else if (isKeyword(token))
         cout << "keyword             " << token << "\n";
-    else if (isStatement(token))
-        cout << "statement           " << token << "\n";
     else if (isLiteral(token))
         cout << "literal             " << token << "\n";
     else if (isVariable(token))

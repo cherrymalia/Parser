@@ -72,21 +72,23 @@ bool isNotLegal(const string &str)
     return str == " " || str == "\n";
 }
 
+
+
 //reformat output, table?
 void printRoleOfToken(const string &token)
 {
     if (isOperator(token))
-        cout << "(operator, " << token << ")\n";
+        cout << "operator            " << token << "\n";
     else if (isSeparator(token))
-        cout << "(separator, " << token << ")\n";
+        cout << "separator           " << token << "\n";
     else if (isKeyword(token))
-        cout << "(keyword, " << token << ")\n";
+        cout << "keyword             " << token << "\n";
     else if (isStatement(token))
-        cout << "(statement, " << token << ")\n";
+        cout << "statement           " << token << "\n";
     else if (isLiteral(token))
-        cout << "(literal, " << token << ")\n";
+        cout << "literal             " << token << "\n";
     else if (isVariable(token))
-        cout << "(variable, " << token << ")\n";
+        cout << "variable            " << token << "\n";
     else
         throw runtime_error("Invalid token: " + token);
 }
@@ -103,6 +105,8 @@ void lexicalAnalyze(const string &nameOfFile)
         exit(0);
     }
 
+    cout <<"Token              Lexeme" << endl;
+    cout <<"-------------------------------" << endl;
     while (file >> noskipws >> ch)
     {
         if (isNotLegal(string(1, ch)))

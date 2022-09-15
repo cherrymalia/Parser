@@ -17,6 +17,15 @@ bool isStatement(const string &str);
 bool isOperator(const string &str);
 bool isSeparator(const string &str);
 bool isNotLegal(const string &str);
+
+/*     remaining for syntax analysis
+bool isAssignment (const string &str);
+bool isStatement (const string &str);
+bool isExpression (const string &str);
+bool isDeclaration (const string &str);    
+bool isProgram (const string &str);     //must verify that the program is syntactically correct and print the appropriate message
+*/
+
 void printRoleOfToken(const vector<string> &tokens);
 void lexicalAnalyze(const string &nameOfFile);
 

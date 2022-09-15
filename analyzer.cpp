@@ -21,13 +21,6 @@ bool isString(const string &str)
     return str[0] == '"' && str[str.size() - 1] == '"';
 }
 
-/*
-bool isBool(const std::string &str)
-{
-  return str == "true" || str == "false";
-}
-*/
-
 bool isLiteral(const string &str)
 {
     return isString(str);
@@ -56,6 +49,7 @@ bool isStatement(const string &str)
 bool isOperator(const string &str)
 {
     const vector<string> operators{"<", ">", "<=", ">=", "*", "+", "-", "/", "=", "-=", "*=", "+=", "/=", "++", "--", "=="};
+    //add block to name each lexeme with different token type ("(" = right_paren, ")" = left_paren, etc.)
     for (const auto &op : operators)
         if (op == str)
             return true;
@@ -78,6 +72,7 @@ bool isNotLegal(const string &str)
     return str == " " || str == "\n";
 }
 
+//reformat output, table?
 void printRoleOfToken(const string &token)
 {
     if (isOperator(token))
@@ -91,9 +86,9 @@ void printRoleOfToken(const string &token)
     else if (isLiteral(token))
         cout << "(literal, " << token << ")\n";
     else if (isVariable(token))
-        cout << "(identifier, " << token << ")\n";
+        cout << "(variable, " << token << ")\n";
     else
-        throw std::runtime_error("Invalid token: " + token);
+        throw runtime_error("Invalid token: " + token);
 }
 
 void lexicalAnalyze(const string &nameOfFile)

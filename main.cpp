@@ -1,6 +1,6 @@
 #include "analyzer.h"
 
 int main() {
-   lexicalAnalyze("test1.txt");
+   lexicalAnalyze("test2.txt");
    return 0;
 }

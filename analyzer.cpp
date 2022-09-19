@@ -3,12 +3,7 @@
 using namespace std;
 
 bool isVariable(const string &str) {
-    int counter = 0;
-    if (str[0] == '_') {
-        counter++;
-    }
-
-    for (; counter < str.size(); counter++) {
+    for (int counter = 0; counter < str.size(); counter++) {
         if (!(isalpha(str[counter]))) {
             return false;
         }
@@ -16,8 +11,7 @@ bool isVariable(const string &str) {
     return true;
 }
 
-bool isString(const string &str)
-{
+bool isString(const string &str) {
     return str[0] == '"' && str[str.size() - 1] == '"';
 }
 
@@ -29,8 +23,7 @@ bool isKeyword(const string &str) {
     return false;
 }
 
-bool isOperator(const string &str)
-{
+bool isOperator(const string &str) {
     const vector<string> operators{"*", "+", "-", "/", "="};
     
     for (const auto &op : operators)
@@ -40,8 +33,7 @@ bool isOperator(const string &str)
     return false;
 }
 
-string getOperator(const string &str)
-{
+string getOperator(const string &str) {
     const vector<string> operators{"*", "+", "-", "/", "="};
     
     if (str == operators[0]) {
@@ -59,19 +51,18 @@ string getOperator(const string &str)
     }
 }
 
-bool isSeparator(const string &str)
-{
+bool isSeparator(const string &str) {
     //add block to name each lexeme with different token type ("(" = right_paren, ")" = left_paren, etc.)
     const vector<string> separators{"{", "}", ",", "(", ")", ";"};
-    for (const auto &separate : separators)
-        if (separate == str)
+    for (const auto &separate : separators) {
+        if (separate == str) {
             return true;
-
+        }
+    }
     return false;
 }
 
-string getSeparator(const string &str)
-{
+string getSeparator(const string &str) {
     const vector<string> separators{"{", "}", ",", "(", ")", ";"};
     if (str == separators[0]) {
         return "left_brace";
@@ -90,14 +81,12 @@ string getSeparator(const string &str)
     }
 }
 
-bool isNotLegal(const string &str)
-{
+bool isNotLegal(const string &str) {
     return str == " " || str == "\n";
 }
 
 //prints the lexeme and token type in a table format
-void printRoleOfToken(const string &token)
-{
+void printRoleOfToken(const string &token) {
     if (isOperator(token))
         cout << token << "                  " << getOperator(token) << "\n";
     else if (isSeparator(token))
@@ -111,49 +100,40 @@ void printRoleOfToken(const string &token)
 }
 
 //lexical analyzer
-void lexicalAnalyze(const string &nameOfFile)
-{
+void lexicalAnalyze(const string &nameOfFile) {
     char ch;
     string buffer;
     fstream file(nameOfFile, fstream::in);
 
-    if (!file.is_open())
-    {
+    if (!file.is_open()) {
         cout << "error while opening the file\n";
         exit(0);
     }
 
     cout <<"Lexeme              Token" << endl;
     cout <<"-------------------------------" << endl;
-    while (file >> noskipws >> ch)
-    {
-        if (isNotLegal(string(1, ch)))
-        {
-            if (!buffer.empty())
-            {
+    while (file >> noskipws >> ch) {
+        if (isNotLegal(string(1, ch))) {
+            if (!buffer.empty()) {
                 printRoleOfToken(buffer);
                 buffer = "";
             }
             continue;
         }
 
-        if (isOperator(string(1, ch)) && !isOperator(buffer))
-        {
-            if (!buffer.empty())
-            {
+        if (isOperator(string(1, ch)) && !isOperator(buffer)){
+            if (!buffer.empty()) {
                 printRoleOfToken(buffer);
                 buffer = "";
             }
         }
 
-        if (!isOperator(string(1, ch)) && isOperator(buffer))
-        {
+        if (!isOperator(string(1, ch)) && isOperator(buffer)) {
             printRoleOfToken(buffer);
             buffer = "";
         }
 
-        if (isSeparator(string(1, ch)))
-        {
+        if (isSeparator(string(1, ch))) {
             if (!buffer.empty())
             {
                 printRoleOfToken(buffer);
@@ -168,11 +148,13 @@ void lexicalAnalyze(const string &nameOfFile)
         buffer += ch;
     }
     file.close();
+
+    //isProgram (tokens);
 }
 
-/*     //add each token to a vector of tokens and check if it is a program using demo language    
-bool isProgram()
-{
-    return true;
+// check if the program in the file is syntactically correct based on the grammar rules  
+/*
+bool isProgram(const vector<string>) {
+    
 }
 */

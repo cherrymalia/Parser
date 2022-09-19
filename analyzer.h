@@ -18,12 +18,7 @@ string getOperator(const string &str);
 string getSeparator(const string &str);
 bool isSeparator(const string &str);
 bool isNotLegal(const string &str);
-
-/*     remaining for syntax analysis   
-bool isProgram (const string &str);     //must verify that the program is syntactically correct and print the appropriate message
-*/
-
 void printRoleOfToken(const vector<string> &tokens);
 void lexicalAnalyze(const string &nameOfFile);
-
+//bool isProgram (const vector<string> &tokens);
 #endif /*ANALYZER_H*/

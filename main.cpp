@@ -1,8 +1,18 @@
+/**
+ * @file main.cpp
+ * 
+ * @author Malia Cherry
+ *
+ * @date Sept. 2022
+ */
+
 #include "analyzer.h"
 
+/** Parse the input file
+*
+* Ends the program after the file is parsed
+*/
 int main() {
-   //accept input for file name through command line or user input???? or both?????
-   //add in error checking for file name, remove from lexicalAnalyzer
    lexicalAnalyze("test1.txt");
    return 0;
 }

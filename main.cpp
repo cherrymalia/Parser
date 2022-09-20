@@ -2,6 +2,6 @@
 
 int main() {
    //accept input for file name
-   lexicalAnalyze("test2.txt");
+   lexicalAnalyze("test1.txt");
    return 0;
 }

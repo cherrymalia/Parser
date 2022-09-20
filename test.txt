@@ -1,5 +1,0 @@
-run {
-float i;
-float y;
-float x = y + i;
-}

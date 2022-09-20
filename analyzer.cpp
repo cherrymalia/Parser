@@ -3,145 +3,197 @@
 using namespace std;
 
 vector<string> tokens;
+int loop = 0;
+int counter = 0;
 
-bool isVariable(const string &str) {
-    for (int counter = 0; counter < str.size(); counter++) {
-        if (!(isalpha(str[counter]))) {
+bool isVariable(const string &str)
+{
+    for (int counter = 0; counter < str.size(); counter++)
+    {
+        if (!(isalpha(str[counter])))
+        {
             return false;
         }
     }
     return true;
 }
 
-bool isKeyword(const string &str) {
+bool isKeyword(const string &str)
+{
     string keyword = "float";
-    if (keyword == str) {
+    if (keyword == str)
+    {
         return true;
     }
     return false;
 }
 
-bool isOperator(const string &str) {
-    const vector<string> operators{"*", "+", "-", "/", "="};
-    
+bool isOperator(const string &str)
+{
+    const vector<string> operators{"*", "/", "="};
+
     for (const auto &op : operators)
-        if (op == str) {
+        if (op == str)
+        {
             return true;
         }
     return false;
 }
 
-string getOperator(const string &str) {
-    const vector<string> operators{"*", "+", "-", "/", "="};
-    
-    if (str == operators[0]) {
+string getOperator(const string &str)
+{
+    const vector<string> operators{"*", "/", "="};
+
+    if (str == operators[0])
+    {
         return "multiply_op";
-    } else if (str == operators[1]) {
-        return "app_op";
-    } else if (str == operators[2]) {
-        return "subtract_op";
-    } else if (str == operators[3]) {
+    }
+    else if (str == operators[1])
+    {
         return "divide_op";
-    } else if (str == operators[4]) {
+    }
+    else if (str == operators[2])
+    {
         return "assignment_op";
-    } else {
+    }
+    else
+    {
         return "not an operator";
     }
 }
 
-//add block to name each lexeme with different token type ("(" = right_paren, ")" = left_paren, etc.)
-bool isSeparator(const string &str) {
+// add block to name each lexeme with different token type ("(" = right_paren, ")" = left_paren, etc.)
+bool isSeparator(const string &str)
+{
     const vector<string> separators{"{", "}", ",", "(", ")", ";"};
-    for (const auto &separate : separators) {
-        if (separate == str) {
+    for (const auto &separate : separators)
+    {
+        if (separate == str)
+        {
             return true;
         }
     }
     return false;
 }
 
-string getSeparator(const string &str) {
+string getSeparator(const string &str)
+{
     const vector<string> separators{"{", "}", ",", "(", ")", ";"};
-    if (str == separators[0]) {
+    if (str == separators[0])
+    {
         return "left_brace";
-    } else if (str == separators[1]) {
+    }
+    else if (str == separators[1])
+    {
         return "right_brace";
-    } else if (str == separators[2]) {
+    }
+    else if (str == separators[2])
+    {
         return "comma";
-    } else if (str == separators[3]) {
+    }
+    else if (str == separators[3])
+    {
         return "left_paren";
-    } else if (str == separators[4]) {
+    }
+    else if (str == separators[4])
+    {
         return "right_paren";
-    } else if (str == separators[5]) {
+    }
+    else if (str == separators[5])
+    {
         return "semicolon";
-    } else {
+    }
+    else
+    {
         return "not a separator";
     }
 }
 
-bool isNotLegal(const string &str) {
+bool isNotLegal(const string &str)
+{
     return str == " " || str == "\n";
 }
 
-//prints the lexeme and token type in a table format
-void printRoleOfToken(const string &token) {
-    if (isOperator(token)) {
+// prints the lexeme and token type in a table format
+void printRoleOfToken(const string &token)
+{
+    if (isOperator(token))
+    {
         tokens.emplace_back(getOperator(token));
         cout << token << "                  " << getOperator(token) << "\n";
-    } else if (isSeparator(token)) {
+    }
+    else if (isSeparator(token))
+    {
         tokens.emplace_back(getSeparator(token));
         cout << token << "                  " << getSeparator(token) << "\n";
-    } else if (isKeyword(token)) {
+    }
+    else if (isKeyword(token))
+    {
         tokens.emplace_back("keyword");
         cout << token << "              keyword\n";
-    } else if (isVariable(token)) {
+    }
+    else if (isVariable(token))
+    {
         tokens.emplace_back("variable");
         cout << token << "                  variable\n";
-    } else {
+    }
+    else
+    {
         throw runtime_error("Invalid token: " + token);
     }
 }
 
-//lexical analyzer
-void lexicalAnalyze(const string &nameOfFile) {
+// lexical analyzer
+void lexicalAnalyze(const string &nameOfFile)
+{
     char ch;
     string buffer;
     fstream file(nameOfFile, fstream::in);
 
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         cout << "error while opening the file\n";
         exit(0);
     }
 
-    cout <<"\nLexeme              Token" << endl;
-    cout <<"-------------------------------" << endl;
-    while (file >> noskipws >> ch) {
-        if (isNotLegal(string(1, ch))) {
-            if (!buffer.empty()) {
+    cout << "\nLexeme              Token" << endl;
+    cout << "-------------------------------" << endl;
+    while (file >> noskipws >> ch)
+    {
+        if (isNotLegal(string(1, ch)))
+        {
+            if (!buffer.empty())
+            {
                 printRoleOfToken(buffer);
                 buffer = "";
             }
             continue;
         }
 
-        if (isOperator(string(1, ch)) && !isOperator(buffer)){
-            if (!buffer.empty()) {
+        if (isOperator(string(1, ch)) && !isOperator(buffer))
+        {
+            if (!buffer.empty())
+            {
                 printRoleOfToken(buffer);
                 buffer = "";
             }
         }
 
-        if (!isOperator(string(1, ch)) && isOperator(buffer)) {
+        if (!isOperator(string(1, ch)) && isOperator(buffer))
+        {
             printRoleOfToken(buffer);
             buffer = "";
         }
 
-        if (isSeparator(string(1, ch))) {
-            if (!buffer.empty()) {
+        if (isSeparator(string(1, ch)))
+        {
+            if (!buffer.empty())
+            {
                 printRoleOfToken(buffer);
                 buffer = "";
             }
-            if (isSeparator(string(1, ch))) {
+            if (isSeparator(string(1, ch)))
+            {
                 printRoleOfToken(string(1, ch));
                 continue;
             }
@@ -151,25 +203,244 @@ void lexicalAnalyze(const string &nameOfFile) {
 
     file.close();
 
-    if(isProgram(tokens)) {
+    if (isProgram(tokens))
+    {
         cout << "This is a valid program" << endl;
-    } else {
+    }
+    else
+    {
         cout << "This is not a valid program" << endl;
     }
 }
 
-//check if the program is syntactically correct
-bool isProgram(vector<string> &list) {
-    if (list[0] == "keyword") {
-        for (int i = 0; i < list.size(); i++) {
-        
+// return pass/fail
+void printPass(bool pass)
+{
+    if (pass)
+    {
+        cout << "The program is generated by the grammar" << endl;
+    }
+    else
+    {
+        cout << "The program cannot be generated by the Demo Language" << endl;
+    }
+}
+
+// checks if there is an expression
+bool expression(vector<string> &list)
+{
+    if (list[counter] == "variable")
+    {
+        counter++;
+        if (list[counter] == "multiply_op") {
+            counter++;
+            if (expression(list)) {
+                return true;;
+            } else {
+                cout << "Error: Expected expression" << endl;
+                return false;
+            }
+        } else if (list[counter] == "divide_op") {
+            counter++;
+            if (expression(list)) {
+                return true;
+            } else {
+                cout << "Error: Expected expression" << endl;
+                return false;
+            }
+        } else {
+            return true;
         }
     } else {
-        cout << "The program cannot be generated by the Demo Language" << endl;
-        cout << "Error: Program must start with a keyword" << endl;
+        cout << "Error: Expected variable" << endl;
         return false;
     }
+}
 
-    cout << "The program is generated by the grammar" << endl;
+bool assignment(vector<string> &list)
+{
+    if (list[counter] == "variable")
+    {
+        counter++;
+        if (list[counter] == "assignment_op")
+        {
+            counter++;
+            if (expression(list))
+            {
+                return true;
+            }
+            else {
+                cout << "Error: Expected expression" << endl;
+                return false;
+            }
+        } else {
+            cout << "Error: Expected assignment operator" << endl;
+            return false;
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool statement(vector<string> &list)
+{
+
+    if (assignment(list))
+    {
+        if (list[counter] == "semicolon") {
+            if (list[counter + 1] == "variable") {
+                counter++;
+                if (statement(list)) {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            cout << "Error: missing semicolon" << endl;
+            return false;
+        }
+    } else {
+        cout << "Error: expected assignment" << endl;
+        return false;
+    }
+    return true;
+}
+
+// FIX ME
+bool declaration(vector<string> &list)
+{
+    if (list[counter] == "keyword")
+    {
+        counter++;
+        if (list[counter] == "variable")
+        {
+            counter++;
+            if (list[counter] == "semicolon")
+            {
+                if (list[counter + 1] == "keyword")
+                {
+                    counter++;
+                    if (declaration(list)) {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                cout << "Error: missing semicolon" << endl;
+                return false;
+            }
+        }
+        else
+        {
+            cout << "Error: expected variable" << endl;
+            return false;
+        }
+    }
+    else
+    {
+        cout << "Error: expected keyword" << endl;
+        return false;
+    }
+    return false;
+}
+
+// check if the program is syntactically correct
+bool isProgram(vector<string> &list)
+{
+    // step through each token in list to see if the program is written syntactically correct
+    while (counter < list.size())
+    {
+        if (list[counter] == "keyword")
+        {
+            counter++;
+            if (list[counter] == "variable")
+            {
+                counter++;
+                if (list[counter] == "left_paren")
+                {
+                    counter++;
+                    if (list[counter] == "right_paren")
+                    {
+                        counter++;
+                        if (list[counter] == "left_brace")
+                        {
+                            counter++;
+                            if (declaration(list))
+                            {
+                                counter++;
+                                if (statement(list)) {
+                                    counter++;
+                                    if (list[counter] == "right_brace")
+                                    {
+                                        printPass(true);
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        printPass(false);
+                                        cout << "Error: missing right brace" << endl;
+                                        return false;
+                                    }
+                                }
+                                else
+                                {
+                                    printPass(false);
+                                    cout << "Error: Expected statements" << endl;
+                                    return false;
+                                }
+                                printPass(true);
+                                return true;
+                            }
+                            else
+                            {
+                                printPass(false);
+                                cout << "Error: Expected declarations" << endl;
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            printPass(false);
+                            cout << "Error: Expected left brace" << endl;
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        printPass(false);
+                        cout << "Error: Expected right parenthesis" << endl;
+                        return false;
+                    }
+                }
+                else
+                {
+                    printPass(false);
+                    cout << "Error: Expected left parenthesis" << endl;
+                    return false;
+                }
+            }
+            else
+            {
+                printPass(false);
+                cout << "Error: A keyword must be followed by a variable" << endl;
+                return false;
+            }
+        }
+        else
+        {
+            printPass(false);
+            cout << "Error: Program must start with a keyword" << endl;
+            return false;
+        }
+    }
+    printPass(true);
     return true;
 }

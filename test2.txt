@@ -1,4 +1,4 @@
-float sub (float x, float y) {
+float sub (float x, float y ) {
 float z;
 z = x * y;
 }

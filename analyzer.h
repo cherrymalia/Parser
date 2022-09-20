@@ -17,10 +17,13 @@ string getOperator(const string &str);
 string getSeparator(const string &str);
 bool isSeparator(const string &str);
 bool isNotLegal(const string &str);
-void printRoleOfToken(const vector<string> &tokens);
+void printRoleOfToken(const vector<string> &list);
 void lexicalAnalyze(const string &nameOfFile);
 
-
-
+bool expression(vector<string> &list);
+bool assignment(vector<string> &list);
+bool statement (vector<string> &list);
+bool declaration (vector<string> &list);
+void printPass(bool &pass);
 bool isProgram (vector<string> &list);
 #endif /*ANALYZER_H*/

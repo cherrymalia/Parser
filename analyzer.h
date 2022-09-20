@@ -2,14 +2,14 @@
 #define ANALYZER_H
 
 #include <iostream>
-#include <iomanip>
 #include <fstream>
 #include <string>
 #include <vector>
-#include <algorithm>
+//#include <algorithm>
 
 using namespace std;
 
+//functions for lexical analysis
 bool isVariable(const string &str);
 bool isKeyword(const string &str);
 bool isOperator(const string &str);
@@ -20,10 +20,12 @@ bool isNotLegal(const string &str);
 void printRoleOfToken(const vector<string> &list);
 void lexicalAnalyze(const string &nameOfFile);
 
+//functions for syntax analysis
 bool expression(vector<string> &list);
 bool assignment(vector<string> &list);
 bool statement (vector<string> &list);
 bool declaration (vector<string> &list);
 void printPass(bool &pass);
 bool isProgram (vector<string> &list);
+
 #endif /*ANALYZER_H*/

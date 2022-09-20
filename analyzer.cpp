@@ -1,11 +1,13 @@
+//reformat the code, move up right brace to the end of the line
+
 #include "analyzer.h"
 
 using namespace std;
 
 vector<string> tokens;
-int loop = 0;
 int counter = 0;
 
+//DEFINE FUNCTION
 bool isVariable(const string &str)
 {
     for (int counter = 0; counter < str.size(); counter++)
@@ -18,6 +20,7 @@ bool isVariable(const string &str)
     return true;
 }
 
+//DEFINE FUNCTION
 bool isKeyword(const string &str)
 {
     string keyword = "float";
@@ -28,6 +31,7 @@ bool isKeyword(const string &str)
     return false;
 }
 
+//DEFINE FUNCTION
 bool isOperator(const string &str)
 {
     const vector<string> operators{"*", "/", "="};
@@ -40,6 +44,7 @@ bool isOperator(const string &str)
     return false;
 }
 
+//DEFINE FUNCTION
 string getOperator(const string &str)
 {
     const vector<string> operators{"*", "/", "="};
@@ -62,7 +67,7 @@ string getOperator(const string &str)
     }
 }
 
-// add block to name each lexeme with different token type ("(" = right_paren, ")" = left_paren, etc.)
+//DEFINE FUNCTION
 bool isSeparator(const string &str)
 {
     const vector<string> separators{"{", "}", ",", "(", ")", ";"};
@@ -76,6 +81,7 @@ bool isSeparator(const string &str)
     return false;
 }
 
+//DEFINE FUNCTION
 string getSeparator(const string &str)
 {
     const vector<string> separators{"{", "}", ",", "(", ")", ";"};
@@ -109,6 +115,7 @@ string getSeparator(const string &str)
     }
 }
 
+//DEFINE FUNCTION
 bool isNotLegal(const string &str)
 {
     return str == " " || str == "\n";
@@ -257,6 +264,7 @@ bool expression(vector<string> &list)
     }
 }
 
+//DEFINE FUNCTION
 bool assignment(vector<string> &list)
 {
     if (list[counter] == "variable")
@@ -284,6 +292,7 @@ bool assignment(vector<string> &list)
     }
 }
 
+//DEFINE FUNCTION
 bool statement(vector<string> &list)
 {
 
@@ -309,7 +318,7 @@ bool statement(vector<string> &list)
     return true;
 }
 
-// FIX ME
+//DEFINE FUNCTION
 bool declaration(vector<string> &list)
 {
     if (list[counter] == "keyword")
@@ -352,7 +361,7 @@ bool declaration(vector<string> &list)
     return false;
 }
 
-// check if the program is syntactically correct
+//syntax analyzer
 bool isProgram(vector<string> &list)
 {
     // step through each token in list to see if the program is written syntactically correct

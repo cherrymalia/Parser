@@ -1,10 +1,23 @@
 # Parser
-A simple c++ program that takes a file as input and after tokenizing the file it finds what each token name is(identifier, keyword, separator, operator, literal or comment).
+A C++ program that takes a file as input, identifies what token type the lexeme in the file are, and prints them out. It then uses the EBNF Demo Language to check if the file is a syntaxically correct program.
 
 ## Author
 * [Malia Cherry](https://github.com/cherrymalia)
 
-
+## The EBNF Demo Language
+```
+<program>   ->    <keyword><ident>() {<declares><stmts>}
+<declares>  ->    <keyword><ident> ;
+            |     <keyword><ident> ; <declares>
+<stmts>     ->    <assign> ; <stmts>
+            |     <assign> ;
+<assign>    ->    <ident> = <expr>
+<expr>      ->    <ident> {*|/} <expr>
+            |     <ident> 
+            |     (<expr>)
+keyword     ->    float
+ident       ->    a<ident>|b<ident>...|z<ident>
+```
 ### Get Started
 
 Use the following to compile the code
@@ -19,25 +32,8 @@ sudo apt-get install g++
 git@github.com:cherrymalia/Parser.git
 ```
 
-2. There are two test files, you can change which one you use by changing the code in main.cpp
+2. There are two test files. You can change which one you use by changing the code in main.cpp
 
-test1.txt
-```
-float test (){
-float m;
-float q;
-float data;
-data = m * q / data;
-}
-```
-
-test2.txt
-```
-float sub (float x, float y ) {
-float z;
-z = x * y;
-}
-```
 3. Compile it with:
 
 ```
